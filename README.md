@@ -2,7 +2,9 @@
 
 My JSConf 2015 presentation on Headless Testing Against Real Web Browsers.
 
-### setup
+The slides can be viewed online at [mdb.github.io/testing-with-xvfb](http://mdb.github.io/testing-with-xvfb).
+
+## Setup
 
 1. Install [Node.js](http://nodejs.org/)
 
@@ -28,6 +30,6 @@ My JSConf 2015 presentation on Headless Testing Against Real Web Browsers.
    $ grunt serve
    ```
 
-8. Open <http://localhost:8000> to the your presentation
+8. Open <http://localhost:8000> to view the presentation.
 
    You can change the port by using `grunt serve --port 8001`.
