@@ -1,0 +1,24 @@
+#slide-3 {
+  background: url('images/comcast_logo.png') no-repeat;
+}
+
+#slide-4 {
+  background: url('images/xtv.png') no-repeat;
+  background-size: 100%;
+}
+
+#slide-5 {
+  background: url('images/xfinity_origin.png') no-repeat;
+  background-position: center;
+}
+
+#slide-7 {
+  background: url('images/jsconf2015.png') no-repeat;
+  background-size: 75%;
+  background-position: center;
+}
+
+#slide-21 {
+  background: url('images/xtv_movies.png') no-repeat;
+  background-size: 100%;
+}
