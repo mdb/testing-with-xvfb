@@ -1,3 +1,7 @@
+img.vagrant-capture {
+  width: 800px;
+}
+
 #slide-3 {
   background: url('images/comcast_logo.png') no-repeat;
 }
@@ -21,4 +25,28 @@
 #slide-21 {
   background: url('images/xtv_movies.png') no-repeat;
   background-size: 100%;
+}
+
+#slide-30 {
+  background: url('images/thumbs_up.png') no-repeat;
+  background-position: center;
+}
+
+#slide-51,
+#slide-57 {
+  background-color: #fff;
+  height: 100%;
+}
+
+#slide-51 video,
+#slide-57 video {
+  width: 1292px;
+  height: 780px;
+}
+
+#slide-51 section.slide-content,
+#slide-57 section.slide-content {
+  margin-top: 0;
+  width: 1292px;
+  height: 100%;
 }

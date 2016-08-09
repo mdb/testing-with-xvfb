@@ -392,6 +392,10 @@ pre .chunk {
   color: #aaa
 }
 
+img.vagrant-capture {
+  width: 800px;
+}
+
 #slide-3 {
   background: url('images/comcast_logo.png') no-repeat;
 }
@@ -415,6 +419,30 @@ pre .chunk {
 #slide-21 {
   background: url('images/xtv_movies.png') no-repeat;
   background-size: 100%;
+}
+
+#slide-30 {
+  background: url('images/thumbs_up.png') no-repeat;
+  background-position: center;
+}
+
+#slide-51,
+#slide-57 {
+  background-color: #fff;
+  height: 100%;
+}
+
+#slide-51 video,
+#slide-57 video {
+  width: 1292px;
+  height: 780px;
+}
+
+#slide-51 section.slide-content,
+#slide-57 section.slide-content {
+  margin-top: 0;
+  width: 1292px;
+  height: 100%;
 }
 
   </style>
@@ -596,14 +624,32 @@ pre .chunk {
 </section>
   </div>
   <div class="slide hidden -" id="slide-29">
-    <section class="slide-content"><h1 id="so-">So...</h1>
+    <section class="slide-content"><pre><code>language: node_js
+
+before_script:
+  - npm install -g bower web-component-tester
+  - bower install
+
+addons:
+ firefox: &#39;46.0&#39;
+ apt:
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
+
+script:
+  - xvfb-run wct</code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-30">
-    <section class="slide-content"><p><img src="images/thumbs_up.png" /></p>
+    <section class="slide-content"><h1 id="so-">So...</h1>
 </section>
   </div>
   <div class="slide hidden -" id="slide-31">
+    <section class="slide-content"><!-- thumbs up--></section>
+  </div>
+  <div class="slide hidden -" id="slide-32">
     <section class="slide-content"><h3 id="sauce-labs-ci">Sauce Labs CI</h3>
 <p><a href="http://saucelabs.com">saucelabs.com</a></p>
 <ul>
@@ -612,12 +658,12 @@ pre .chunk {
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-32">
+  <div class="slide hidden -" id="slide-33">
     <section class="slide-content"><h1 id="but-">But...</h1>
 <h2 id="what-if-your-team-can-t-use-these-">What if your team can&#39;t use these?</h2>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-33">
+  <div class="slide hidden -" id="slide-34">
     <section class="slide-content"><h3 id="whatchu-mean-">Whatchu mean?</h3>
 <ul>
 <li>SLA</li>
@@ -626,23 +672,23 @@ pre .chunk {
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-34">
+  <div class="slide hidden -" id="slide-35">
     <section class="slide-content"><h3 id="enter-x-virtual-frame-buffer">Enter X Virtual Frame Buffer</h3>
 <p>AKA Xvfb</p>
 <p>run GUI applications (like web browsers) with no display!</p>
 <p>(how TravisCI runs web browsers)</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-35">
+  <div class="slide hidden -" id="slide-36">
     <section class="slide-content"><h2 id="how-s-this-work-">How&#39;s this work?</h2>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-36">
+  <div class="slide hidden -" id="slide-37">
     <section class="slide-content"><h3 id="let-s-talk-about-the-x-window-system">Let&#39;s talk about the X Window System</h3>
 <p>How GUI displays are rendered on UNIX/UNIX-like systems</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-37">
+  <div class="slide hidden -" id="slide-38">
     <section class="slide-content"><h3 id="background-x11-display-server">Background: X11 Display Server</h3>
 <ul>
 <li>current release of the X Window System</li>
@@ -651,7 +697,7 @@ pre .chunk {
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-38">
+  <div class="slide hidden -" id="slide-39">
     <section class="slide-content"><h3 id="x-virtual-frame-buffer">X Virtual Frame Buffer</h3>
 <ul>
 <li>behaves like any other X server, yet no graphical output is shown</li>
@@ -660,18 +706,18 @@ pre .chunk {
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-39">
+  <div class="slide hidden -" id="slide-40">
     <section class="slide-content"><h3 id="polymer-testing-box">polymer-testing-box</h3>
 <p><a href="https://github.com/mdb/polymer-testing-box">github.com/mdb/polymer-testing-box</a></p>
 <p>Set up your own Ubuntu for testing with Xvfb!</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-40">
+  <div class="slide hidden -" id="slide-41">
     <section class="slide-content"><h3 id="core-technologies">Core technologies</h3>
 <ul>
 <li>Xvfb</li>
 <li>ansible</li>
-<li>Google Chrome (with Flash!)</li>
+<li>Google Chrome</li>
 <li>Firefox (46)</li>
 <li>Node.js</li>
 <li>bower</li>
@@ -679,7 +725,7 @@ pre .chunk {
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-41">
+  <div class="slide hidden -" id="slide-42">
     <section class="slide-content"><h3 id="demo-time-">Demo time!</h3>
 <ol>
 <li>provision a Vagrant Ubuntu box</li>
@@ -688,11 +734,11 @@ pre .chunk {
 </ol>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-42">
+  <div class="slide hidden -" id="slide-43">
     <section class="slide-content"><h1 id="some-more-details-">Some more details...</h1>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-43">
+  <div class="slide hidden -" id="slide-44">
     <section class="slide-content"><h3 id="vagrant">Vagrant</h3>
 <p>(not JavaScript)</p>
 <ul>
@@ -701,7 +747,7 @@ pre .chunk {
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-44">
+  <div class="slide hidden -" id="slide-45">
     <section class="slide-content"><h3 id="vagrantfile">Vagrantfile</h3>
 <p>(not JavaScript)</p>
 <pre><code class="lang-ruby">...
@@ -713,7 +759,7 @@ config.vm.provision <span class="symbol">:ansible</span> <span class="keyword">d
 ...</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-45">
+  <div class="slide hidden -" id="slide-46">
     <section class="slide-content"><h3 id="ansible-playbook-yml-">ansible <code>playbook.yml</code></h3>
 <p>(not JavaScript)</p>
 <ol>
@@ -723,58 +769,56 @@ config.vm.provision <span class="symbol">:ansible</span> <span class="keyword">d
 </ol>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-46">
-    <section class="slide-content"><h3 id="provision-the-box">Provision the box</h3>
-<p><img src="images/vagrant_up.png" /></p>
-</section>
-  </div>
   <div class="slide hidden -" id="slide-47">
-    <section class="slide-content"><h3 id="ssh-into-the-box">ssh into the box</h3>
-<p><img src="images/vagrant_ssh.png" /></p>
+    <section class="slide-content"><h3 id="provision-the-box">Provision the box</h3>
+<p><img class="vagrant-capture" src="images/vagrant_up.png" /></p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-48">
+    <section class="slide-content"><h3 id="ssh-into-the-box">ssh into the box</h3>
+<p><img class="vagrant-capture" src="images/vagrant_ssh.png" /></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-49">
     <section class="slide-content"><h3 id="clone-iron-ajax">clone iron-ajax</h3>
 <pre><code>cd /vagrant
 git clone https://github.com/PolymerElements/iron-ajax.git</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-49">
+  <div class="slide hidden -" id="slide-50">
     <section class="slide-content"><h3 id="install-bower-components">install bower components</h3>
 <pre><code>cd core-ajax
 git checkout 1.3.0
 bower install</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-50">
-    <section class="slide-content"><h3 id="run-web-component-tester">run web-component-tester</h3>
-<p>TODO: update video</p>
-</section>
-  </div>
   <div class="slide hidden -" id="slide-51">
+    <section class="slide-content"><video controls="controls" src="videos/vagrant_run.mov"></video></section>
+  </div>
+  <div class="slide hidden -" id="slide-52">
     <section class="slide-content"><h3 id="but-">But...</h3>
 <p>How do we know Chrome and Firefox really ran?</p>
 <p>And what about debugging?</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-52">
+  <div class="slide hidden -" id="slide-53">
     <section class="slide-content"><h1 id="vnc-">VNC!</h1>
 <h2 id="the-ubuntu-box-has-no-gui-but-your-mac-does-">The Ubuntu box has no GUI but your Mac does!</h2>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-53">
+  <div class="slide hidden -" id="slide-54">
     <section class="slide-content"><h3 id="on-the-ubuntu-box">On the Ubuntu box</h3>
 <pre><code>sudo apt-get install x11vnc
 x11vnc -display :0 &amp;</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-54">
+  <div class="slide hidden -" id="slide-55">
     <section class="slide-content"><h3 id="on-your-mac">On your Mac</h3>
 <pre><code>brew install Caskroom/cask/tigervnc-viewer</code></pre>
 <p>...start Tiger VNC Viewer on <code>localhost:5901</code></p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-55">
+  <div class="slide hidden -" id="slide-56">
     <section class="slide-content"><h3 id="localhost-5901-">localhost:5901?</h3>
 <p>remmber this from the <code>Vagrantfile</code>?</p>
 <pre><code>...
@@ -782,33 +826,62 @@ config.vm.network &#39;forwarded_port&#39;, guest: 5900, host: 5901
 ...</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-56">
-    <section class="slide-content"><p>TODO: side by side video</p>
-</section>
-  </div>
   <div class="slide hidden -" id="slide-57">
-    <section class="slide-content"><h3 id="the-code">The code</h3>
-<ul>
-<li><a href="https://github.com/mdb/polymer-testing-box">github.com/mdb/polymer-testing-box</a></li>
-</ul>
-<p>TODO: doctor up other repos</p>
-<p>docker?
-electron?</p>
-</section>
+    <section class="slide-content"><video controls="controls" src="videos/vagrant_vnc_run.mov"></video></section>
   </div>
   <div class="slide hidden -" id="slide-58">
+    <section class="slide-content"><h3 id="the-code">The code</h3>
+<p><a href="https://github.com/mdb/polymer-testing-box">github.com/mdb/polymer-testing-box</a></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-59">
+    <section class="slide-content"><h3 id="what-about-docker-">What about Docker?</h3>
+<p>VMs are cool but what about containers?</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-60">
+    <section class="slide-content"><h3 id="docker">Docker</h3>
+<ul>
+<li>containerized infrastructure increasingly common</li>
+<li>TravisCI utilizes Dockerized workers</li>
+<li>More simple than Ansible-provisioned VM</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-61">
+    <section class="slide-content"><h3 id="bonus">Bonus</h3>
+<p>[TODO: Dockerfile link]</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-62">
+    <section class="slide-content"><p>TODO:</p>
+<pre><code>docker pull clapclapexcitement/polymer-testing
+docker run...</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-63">
+    <section class="slide-content"><p>TODO: demo video of Docker</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-64">
+    <section class="slide-content"><p>TODO: other apps?</p>
+<p>electron?</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-65">
     <section class="slide-content"><h3 id="next-steps">Next steps</h3>
 <ul>
 <li>spin up a cloud instance during your builds?</li>
 <li>advanced web scraping?</li>
 <li>headless functional testing?</li>
+<li>collect remote screen captures?</li>
 </ul>
 <p>TODO:
 more
 cloud deployment example with Terraform?</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-59">
+  <div class="slide hidden -" id="slide-66">
     <section class="slide-content"><h3 id="thanks-">Thanks!</h3>
 <ul>
 <li><a href="http://mikeball.info">mikeball.info</a></li>
@@ -817,10 +890,10 @@ cloud deployment example with Terraform?</p>
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-60">
+  <div class="slide hidden -" id="slide-67">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-61">
+  <div class="slide hidden" id="slide-68">
     <section class="slide-content"><div class="author">
   <h1 class="name">Mike Ball</h1>
     <h3 class="url">

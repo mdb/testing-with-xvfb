@@ -188,11 +188,32 @@ Much more common!
 
 ---
 
+```
+language: node_js
+
+before_script:
+  - npm install -g bower web-component-tester
+  - bower install
+
+addons:
+ firefox: '46.0'
+ apt:
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
+
+script:
+  - xvfb-run wct
+```
+
+---
+
 # So...
 
 ---
 
-<img src="images/thumbs_up.png" />
+<!-- thumbs up-->
 
 ---
 
@@ -267,7 +288,7 @@ Set up your own Ubuntu for testing with Xvfb!
 
 * Xvfb
 * ansible
-* Google Chrome (with Flash!)
+* Google Chrome
 * Firefox (46)
 * Node.js
 * bower
@@ -324,13 +345,13 @@ end
 
 ### Provision the box
 
-<img src="images/vagrant_up.png" />
+<img class="vagrant-capture" src="images/vagrant_up.png" />
 
 ---
 
 ### ssh into the box
 
-<img src="images/vagrant_ssh.png" />
+<img class="vagrant-capture" src="images/vagrant_ssh.png" />
 
 ---
 
@@ -353,9 +374,7 @@ bower install
 
 ---
 
-### run web-component-tester
-
-TODO: update video
+<video controls="controls" src="videos/vagrant_run.mov"></video>
 
 ---
 
@@ -405,17 +424,51 @@ config.vm.network 'forwarded_port', guest: 5900, host: 5901
 
 ---
 
-TODO: side by side video
+<video controls="controls" src="videos/vagrant_vnc_run.mov"></video>
 
 ---
 
 ### The code
 
-* [github.com/mdb/polymer-testing-box](https://github.com/mdb/polymer-testing-box)
+[github.com/mdb/polymer-testing-box](https://github.com/mdb/polymer-testing-box)
 
-TODO: doctor up other repos
+---
 
-docker?
+### What about Docker?
+
+VMs are cool but what about containers?
+
+---
+
+### Docker
+
+* containerized infrastructure increasingly common
+* TravisCI utilizes Dockerized workers
+* More simple than Ansible-provisioned VM
+
+---
+
+### Bonus
+
+[TODO: Dockerfile link]
+
+---
+
+TODO:
+
+```
+docker pull clapclapexcitement/polymer-testing
+docker run...
+```
+
+---
+
+TODO: demo video of Docker
+
+---
+
+TODO: other apps?
+
 electron?
 
 ---
@@ -425,6 +478,9 @@ electron?
 * spin up a cloud instance during your builds?
 * advanced web scraping?
 * headless functional testing?
+* collect remote screen captures?
+
+---
 
 TODO:
 more
