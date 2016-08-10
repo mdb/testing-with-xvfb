@@ -1,0 +1,24 @@
+language: node_js
+
+node_js:
+  - 6
+
+env:
+ global:
+  - GH_REF: github.com/mdb/testing-with-xvfb.git
+  - secure: "a+fKEW4dwN7ogcIzcKJb5136aD6Q+ehVUJfKdOJiVsJ2BRlTHoAD9ZYMBcCzXSX2+r9mjp+COzrR91ocLHBqMOReO7qk0ssNz7zhAi1XjUkh5Gkl8tfzaQT4CaVh9+5x3hUfuKKBadqxNtFNmxSkUWF214jHFTwn5h/9tOcqrtoXgLq3ZONUuIs7xIWj/6vh0ToNL75VwppSu4Ii+KSQjpYjAulYRlGLrdVUvtLlTzB9AVqjbgiHlvNNJW59VSA+8RvcG7LWPHfMtKM+PsyV62tQQT1MPkkwHkowL/MK4mVtXAepVmjJn7QU+yyN7b+/qjiR499SHuNwyMzSdvUwDLGyuQa/XP3qiQTYzO8Sq823DB/6bR82Ypc3JV5j2Uz7vxPJLuIjSLIODBiJdTjcRalXdB5y+utrLlWwGJIrO3Qx3IeuVHKTNQhPg39Rxj+BlAWbb5cPyyFd1gBqnxAy2kjJ24lbKx8q/uBeocNSIbX8oWGmib49gKPlvI6elBGrl6tuF7eYFkxM2q2xEqBM2Tq5dL46+JPPAdtBKbWt4ZVsW9jQw71y5GVSrfyy4bIO/lmN18zRsppsOA3Dtk3ptKLsRtVb7B3lz7oxxlL1ywsOYwu5HltzR5QD9R0QdteIx7kQpgdnUcqfjYw555WyVV3k/RCvfQKsQ3TEyVGBjAY="
+
+before_script:
+  - npm build
+  - npm start &
+  - npm run update-webdriver
+
+script:
+  - xvfb-run npm test
+
+deploy:
+  provider: script
+  script: deploy.sh
+  on:
+    repo: mdb/testing-with-xvfb
+    branch: master
