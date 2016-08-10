@@ -1,0 +1,14 @@
+{
+  "name": "testing-with-xvfb",
+  "version": "0.0.1",
+  "description": "A presentation on testing against real web browsers using Xvfb",
+  "main": "",
+  "scripts": {
+    "build": "node_modules/cleaver/bin/cleaver"
+  },
+  "author": "Mike Ball",
+  "license": "MIT",
+  "devDependencies": {
+    "cleaver": "0.8.2"
+  }
+}
