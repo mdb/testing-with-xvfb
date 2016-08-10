@@ -1,35 +1,34 @@
+[![Build Status](https://travis-ci.org/mdb/testing-with-xvfb.svg?branch=master)](https://travis-ci.org/mdb/testing-with-xvfb)
+
 # testing-with-xvfb
 
 My JSConf 2015 presentation on Headless Testing Against Real Web Browsers.
 
 The slides can be viewed online at [mdb.github.io/testing-with-xvfb](http://mdb.github.io/testing-with-xvfb).
 
-## Setup
+## Compiling/running locally
 
-1. Install [Node.js](http://nodejs.org/)
+Compile:
 
-2. Install [Grunt](http://gruntjs.com/getting-started#installing-the-cli)
+```
+npm run build
+```
 
-4. Clone the repository
-   ```sh
-   $ git clone https://github.com/mdb/testing-with-xvfb.git
-   ```
+Serve at `localhost:8080`:
 
-5. Navigate to the testing-with-xvfb directory
-   ```sh
-   $ cd testing-with-xvfb
-   ```
+```
+npm start
+```
 
-6. Install dependencies
-   ```sh
-   $ npm install
-   ```
+Execute tests:
 
-7. Serve the presentation and monitor source files for changes
-   ```sh
-   $ grunt serve
-   ```
+```
+npm run update-webdriver
+npm test
+```
 
-8. Open <http://localhost:8000> to view the presentation.
+## TravisCI
 
-   You can change the port by using `grunt serve --port 8001`.
+The `.travis.yml` and [travis-ci.org/mdb/testing-with-xvfb](https://travis-ci.org/mdb/testing-with-xvfb) offer a basic demo of some testing techniques covered in this presentation.
+
+Commits to `master` that pass CI are auto-deployed to [mdb.github.io/testing-with-xvfb](http://mdb.github.io/testing-with-xvfb).
