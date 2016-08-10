@@ -5,6 +5,6 @@ exports.config = {
     'index_spec.js'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'firefox'
   }
 };
