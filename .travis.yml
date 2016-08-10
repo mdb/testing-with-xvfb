@@ -6,6 +6,7 @@ node_js:
 before_script:
   - npm build
   - npm start &
+  - npm run update-webdriver
 
 script:
   - xvfb-run npm test
