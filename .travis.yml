@@ -1,4 +1,15 @@
 language: node_js
 
-script:
+addons:
+ apt:
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
+
+before_script:
   - npm build
+  - npm start &
+
+script:
+  - xvfb-run npm test
