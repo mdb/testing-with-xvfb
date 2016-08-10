@@ -10,3 +10,10 @@ before_script:
 
 script:
   - xvfb-run npm test
+
+deploy:
+  provider: script
+  script: deploy.sh
+  on:
+    repo: mdb/testing-with-xvfb
+    branch: master
