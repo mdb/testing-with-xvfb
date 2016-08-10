@@ -1,14 +1,21 @@
 #!/bin/bash
 
+echo "Cleaning up old build dir..."
 rm -rf build || exit 0;
+
+echo "Creating new build dir..."
 mkdir build
 
+echo "Entering build dir..."
 cd build
+
+echo "Copying deploy artifacts..."
 cp ../index.html .
 cp ../style.css .
 cp -R ../images .
 cp -R ../videos .
 
+echo "Pushing to gh-pages"
 git init
 git config user.name "Travis-CI"
 git add .
