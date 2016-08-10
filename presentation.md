@@ -82,6 +82,13 @@ Growth means increased responsibility...
 
 ---
 
+# I <3 automation
+
+## It's a cold, messy, imperfect world out there
+## Let's build something that works
+
+---
+
 # Cheap servers!
 
 ## Virtualization, containers, cloud infrastructure, etc.

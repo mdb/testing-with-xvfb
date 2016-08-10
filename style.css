@@ -22,30 +22,30 @@ img.vagrant-capture {
   background-position: center;
 }
 
-#slide-21 {
+#slide-22 {
   background: url('images/xtv_movies.png') no-repeat;
   background-size: 100%;
 }
 
-#slide-31 {
+#slide-32 {
   background: url('images/thumbs_up.png') no-repeat;
   background-position: center;
 }
 
-#slide-51,
-#slide-57 {
+#slide-52,
+#slide-58 {
   background-color: #fff;
   height: 100%;
 }
 
-#slide-51 video,
-#slide-57 video {
+#slide-52 video,
+#slide-58 video {
   width: 1292px;
   height: 780px;
 }
 
-#slide-51 section.slide-content,
-#slide-57 section.slide-content {
+#slide-52 section.slide-content,
+#slide-58 section.slide-content {
   margin-top: 0;
   width: 1292px;
   height: 100%;
