@@ -18,6 +18,7 @@ script:
 
 deploy:
   provider: script
+  skip_cleanup: true
   script: deploy.sh
   on:
     repo: mdb/testing-with-xvfb
