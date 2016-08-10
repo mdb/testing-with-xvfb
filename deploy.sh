@@ -17,7 +17,7 @@ cp -R ../videos .
 
 echo "Pushing to gh-pages"
 git config user.name "Travis-CI"
-git config user.name "mikedball@gmail.com"
+git config user.email "mikedball@gmail.com"
 git init
 git add .
 git commit -m "Deployed to Github Pages"
