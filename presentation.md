@@ -455,9 +455,9 @@ VMs are cool but what about containers?
 
 ---
 
-### Bonus
+### docker-wct
 
-[TODO: Dockerfile link]
+[github.com/mdb/docker-wct](https://github.com/mdb/docker-wct)
 
 ---
 
