@@ -611,6 +611,10 @@ VNC could work but let's get weird.
 1. Run socat to expose Xquartz to the container
 2. use `-e DISPLAY=192.168.65.1:0` Docker option
 
+(What's that weird IP?
+
+Docker on Mac requires VirtualBox; it's the VirtualBox host IP)
+
 ---
 
 <video controls="controls" src="videos/docker_socat_run.mov"></video>
