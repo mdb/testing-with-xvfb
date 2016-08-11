@@ -10,7 +10,6 @@ env:
 
 before_script:
   - npm run build
-  - echo "ls:"
   - ls
   - npm start &
   - npm run update-webdriver
