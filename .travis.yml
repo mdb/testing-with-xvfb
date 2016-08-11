@@ -23,3 +23,8 @@ deploy:
   on:
     repo: mdb/testing-with-xvfb
     branch: master
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
