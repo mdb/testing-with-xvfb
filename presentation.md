@@ -449,34 +449,108 @@ VMs are cool but what about containers?
 
 ### Docker
 
-* containerized infrastructure increasingly common
-* TravisCI utilizes Dockerized workers
-* More simple than Ansible-provisioned VM
+(not JavaScript)
+
+* "sandbox" with everything code needs to run
+* code, runtime, system tools, system libraries
+* layer of abstraction of OS-level virtualization beyond VM
+
+---
+
+### In the wild
+
+* increasingly common
+* TravisCI utilizes Docker workers
+* more lightweight than Ansible-provisioned VM
 
 ---
 
 ### docker-wct
 
-[github.com/mdb/docker-wct](https://github.com/mdb/docker-wct)
+Execute `wct` in a Docker container running Xvfb!
+
+* [github.com/mdb/docker-wct](https://github.com/mdb/docker-wct)
+* [hub.docker.com/r/clapclapexcitement/wct](https://hub.docker.com/r/clapclapexcitement/wct)
 
 ---
 
-TODO:
+### Dockerfile vs Ansible
+
+`Dockerfile` specs out how to build the Docker image.
+
+---
+
+### How do I use this?
+
+1. Install & run docker
+2. Download the image from DockerHub
+3. Run the image
+
+---
+
+### Also worth noting...
+
+[github.com/mdb/docker-wct](http://github.com/mdb/docker-wct) uses [TravisCI](https://travis-ci.org/mdb/docker-wct/builds)
+
+* CI/tests serve as self-documenting quality checks
+* Docker lends itself well to CI
+* CI is a living example of its usage
+
+---
+
+### Download the image
 
 ```
-docker pull clapclapexcitement/polymer-testing
-docker run...
+docker pull clapclapexcitement/wct
+...
 ```
 
 ---
 
-TODO: demo video of Docker
+### To run
+
+```
+docker run -it \
+  -v $(pwd)/iron-ajax:/usr/src/app \
+  --security-opt seccomp:unconfined \
+  clapclapexcitement/wct bash \
+  -c "/usr/bin/bower install && /usr/bin/xvfb-run wct --skip-selenium-install"
+```
+
+* mount `iron-ajax` repo from your Mac into container
+* pass a `security-opt` to deal with Chrome's use of `seccomp`
+* declare the image to run
+* declare the command we want the container to run
 
 ---
 
-TODO: other apps?
+<video controls="controls" src="videos/docker_run.mov"></video>
 
-electron?
+---
+
+# Visual debugging on a Mac?
+
+I demo'd this for a VM, but what about a container?
+
+---
+
+### Also possible
+
+1. Xquartz - Apple's X Window system
+2. `socat` - expose the Mac's Xquartz socket to the container on a TCP port
+3. declare the Xquartz `$DISPLAY` as the container's `$DISPLAY`
+
+---
+
+<video controls="controls" src="videos/docker_socat_run.mov"></video>
+
+---
+
+### Additional resources
+
+* [nw-testing-box](https://github.com/mdb/nw-testing-box)
+* [nw-app-testing](https://github.com/mdb/nw-app-testing)
+* [electron-app-testing](https://github.com/mdb/electron-app-testing)
 
 ---
 
@@ -486,12 +560,8 @@ electron?
 * advanced web scraping?
 * headless functional testing?
 * collect remote screen captures?
-
----
-
-TODO:
-more
-cloud deployment example with Terraform?
+* further customize your CI
+* more Docker images?
 
 ---
 
