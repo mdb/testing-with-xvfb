@@ -14,13 +14,13 @@ Compile:
 npm run build
 ```
 
-Serve at `localhost:8080`:
+Serve compiled app at `localhost:8080`:
 
 ```
 npm start
 ```
 
-Execute tests:
+Execute tests (run `npm run build` & `npm start` first!):
 
 ```
 npm run update-webdriver
