@@ -642,7 +642,7 @@ VNC could work but let's get weird.
 
 ---
 
-Did anyone accept my PR challenge?
+<iframe id="embedded-animation" src="http://foo/"></iframe>
 
 ---
 
