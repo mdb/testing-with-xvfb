@@ -13,6 +13,19 @@ style: style.css
 
 ---
 
+### Before we get started...a challenge
+
+* slides are at [github.com/mdb/testing-with-xvfb](http://github.com/mdb/testing-with-xvfb)
+* [TravisCI](https://travis-ci.org/mdb/testing-with-xvfb) compiles the slides, executes crude tests using Xvfb, and auto-deploys `master` to [mdb.github.io/testing-with-xvfb](http://mdb.github.io/testing-with-xvfb)
+
+Submit a PR fixing the [fix-my-code](https://github.com/mdb/testing-with-xvfb/tree/fix-my-code) branch based on its failing tests!
+
+---
+
+<!-- headshot -->
+
+---
+
 # Mike Ball
 
 ## [mikeball.info](http://mikeball.info)
@@ -464,7 +477,7 @@ VMs are cool but what about containers?
 * container engine
 * "sandbox" with everything code needs to run
 * code, runtime, system tools, system libraries
-* layer of abstraction of Linux OS-level virtualization beyond VM
+* layer of Linux OS-level abstraction beyond VM
 
 ---
 
@@ -623,8 +636,11 @@ VNC could work but let's get weird.
 * collect remote screen captures?
 * advanced web scraping?
 * headless functional testing?
-* further customize your CI
 * more Docker images?
+
+---
+
+Did anyone accept my PR challenge?
 
 ---
 

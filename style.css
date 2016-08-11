@@ -7,60 +7,65 @@ img.vagrant-capture {
 }
 
 #slide-3 {
+  background: url('images/john_riv.jpg') no-repeat;
+  background-position: center;
+}
+
+#slide-5 {
   background: url('images/comcast_logo.png') no-repeat;
 }
 
-#slide-4 {
+#slide-6 {
   background: url('images/xtv.png') no-repeat;
   background-size: 100%;
 }
 
-#slide-5 {
+#slide-7 {
   background: url('images/xfinity_origin.png') no-repeat;
   background-position: center;
 }
 
-#slide-7 {
+#slide-9 {
   background: url('images/jsconf2015.png') no-repeat;
   background-size: 75%;
   background-position: center;
 }
 
-#slide-22 {
+#slide-24 {
   background: url('images/xtv_movies.png') no-repeat;
   background-size: 100%;
 }
 
-#slide-32 {
+#slide-34 {
   background: url('images/thumbs_up.png') no-repeat;
   background-position: center;
 }
 
-#slide-70,
-#slide-74,
-#slide-52,
-#slide-58 {
+#slide-72,
+#slide-76,
+#slide-54,
+#slide-60 {
   background-color: #fff;
   height: 100%;
 }
 
-#slide-70 video,
-#slide-74 video,
-#slide-52 video,
-#slide-58 video {
+#slide-72 video,
+#slide-76 video,
+#slide-54 video,
+#slide-60 video {
   width: 1292px;
   height: 780px;
 }
 
-#slide-74 video {
+#slide-76 video {
   width: 1245px;
   border: 1px solid #ddd;
 }
 
-#slide-70 section.slide-content,
-#slide-74 section.slide-content,
-#slide-52 section.slide-content,
-#slide-58 section.slide-content {
+#slide-72 section.slide-content,
+#slide-76 section.slide-content,
+#slide-54 section.slide-content,
+#slide-60 section.slide-content {
   margin-top: 0;
   width: 1292px;
   height: 100%;
