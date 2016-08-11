@@ -4,7 +4,7 @@
   "description": "A presentation on testing against real web browsers using Xvfb",
   "main": "",
   "scripts": {
-    "build": "./node_modules/cleaver/bin/cleaver",
+    "build": "./node_modules/cleaver/bin/cleaver presentation.md",
     "start": "./node_modules/http-server/bin/http-server",
     "test": "./node_modules/protractor/bin/protractor test/conf.js",
     "update-webdriver": "./node_modules/protractor/bin/webdriver-manager update"
