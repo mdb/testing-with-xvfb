@@ -2,7 +2,7 @@
 
 # testing-with-xvfb
 
-My JSConf 2015 presentation on Headless Testing Against Real Web Browsers.
+A presentation on Headless Testing Against Real Web Browsers.
 
 The slides can be viewed online at [mdb.github.io/testing-with-xvfb](http://mdb.github.io/testing-with-xvfb).
 
