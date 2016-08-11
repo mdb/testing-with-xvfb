@@ -36,18 +36,29 @@ img.vagrant-capture {
   background-position: center;
 }
 
+#slide-70,
+#slide-74,
 #slide-52,
 #slide-58 {
   background-color: #fff;
   height: 100%;
 }
 
+#slide-70 video,
+#slide-74 video,
 #slide-52 video,
 #slide-58 video {
   width: 1292px;
   height: 780px;
 }
 
+#slide-74 video {
+  width: 1245px;
+  border: 1px solid #ddd;
+}
+
+#slide-70 section.slide-content,
+#slide-74 section.slide-content,
 #slide-52 section.slide-content,
 #slide-58 section.slide-content {
   margin-top: 0;

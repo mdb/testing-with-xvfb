@@ -261,13 +261,17 @@ run GUI applications (like web browsers) with no display!
 
 ---
 
-### Let's talk about the X Window System
+### Let's talk about...
+
+#### the X Window System
 
 How GUI displays are rendered on UNIX/UNIX-like systems
 
 ---
 
-### Background: X11 Display Server
+### Further background...
+
+#### X11 Display Server
 
 * current release of the X Window System
 * windowing system for bitmap displays used to build GUIs
@@ -275,19 +279,21 @@ How GUI displays are rendered on UNIX/UNIX-like systems
 
 ---
 
-### X Virtual Frame Buffer
+### Which brings us to...
 
-* behaves like any other X server, yet no graphical output is shown
-* performs graphical operations in memory without showing screen ouput
+#### X Virtual Frame Buffer
+
+* like any other X server, yet no graphical output is shown
+* performs graphical operations in memory; no screen ouput shown
 * does not require the computer running it to have a display
 
 ---
 
 ### polymer-testing-box
 
-[github.com/mdb/polymer-testing-box](https://github.com/mdb/polymer-testing-box)
+Set up your own Ubuntu VM for testing with Xvfb!
 
-Set up your own Ubuntu for testing with Xvfb!
+[github.com/mdb/polymer-testing-box](https://github.com/mdb/polymer-testing-box)
 
 ---
 
@@ -319,8 +325,9 @@ Set up your own Ubuntu for testing with Xvfb!
 
 (not JavaScript)
 
-* build on VirtualBox
+* built on VirtualBox
 * tool to spin up lightweight, headless VMs
+* the "provider"
 
 ---
 
@@ -375,7 +382,6 @@ git clone https://github.com/PolymerElements/iron-ajax.git
 
 ```
 cd core-ajax
-git checkout 1.3.0
 bower install
 ```
 
@@ -447,13 +453,18 @@ VMs are cool but what about containers?
 
 ---
 
+# No problem!
+
+---
+
 ### Docker
 
 (not JavaScript)
 
+* container engine
 * "sandbox" with everything code needs to run
 * code, runtime, system tools, system libraries
-* layer of abstraction of OS-level virtualization beyond VM
+* layer of abstraction of Linux OS-level virtualization beyond VM
 
 ---
 
@@ -476,13 +487,45 @@ Execute `wct` in a Docker container running Xvfb!
 
 ### Dockerfile vs Ansible
 
-`Dockerfile` specs out how to build the Docker image.
+[`Dockerfile`](https://github.com/mdb/docker-wct/blob/master/Dockerfile) specs out how to build the Docker image.
+
+```
+FROM nodesource/trusty:latest
+
+RUN apt-get update;
+
+# install Chrome
+RUN apt-get install -y curl
+RUN curl -sL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google.list
+RUN apt-get update
+RUN apt-get install -y google-chrome-stable
+
+# install Firefox 46
+RUN apt-get install -y wget tar
+RUN wget -O /usr/local/firefox-46.0.1.tar.bz2 http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/46.0.1/linux-x86_64/en-US/firefox-46.0.1.tar.bz2
+RUN tar xvjf /usr/local/firefox-46.0.1.tar.bz2 -C /usr/local
+RUN ln -s /usr/local/firefox/firefox /usr/bin/firefox
+
+# install xvfb
+RUN apt-get install -y xvfb;
+
+# install java; needed by selenium
+RUN apt-get install -y default-jre
+
+# install web-component-tester & bower globally
+RUN npm install -g web-component-tester
+RUN npm install -g bower
+
+# configure bower
+RUN echo '{ "allow_root": true }' > /root/.bowerrc
+```
 
 ---
 
 ### How do I use this?
 
-1. Install & run docker
+1. Install & run Docker
 2. Download the image from DockerHub
 3. Run the image
 
@@ -490,11 +533,15 @@ Execute `wct` in a Docker container running Xvfb!
 
 ### Also worth noting...
 
-[github.com/mdb/docker-wct](http://github.com/mdb/docker-wct) uses [TravisCI](https://travis-ci.org/mdb/docker-wct/builds)
+[github.com/mdb/docker-wct](http://github.com/mdb/docker-wct) uses [TravisCI](https://travis-ci.org/mdb/docker-wct/builds).
 
 * CI/tests serve as self-documenting quality checks
 * Docker lends itself well to CI
-* CI is a living example of its usage
+* CI operates as living example of the tool's usage
+
+So...read the `.travis.yml` if you're confused.
+
+And take a gander at its [TravisCI builds](https://travis-ci.org/mdb/docker-wct/builds).
 
 ---
 
@@ -514,7 +561,7 @@ docker run -it \
   -v $(pwd)/iron-ajax:/usr/src/app \
   --security-opt seccomp:unconfined \
   clapclapexcitement/wct bash \
-  -c "/usr/bin/bower install && /usr/bin/xvfb-run wct --skip-selenium-install"
+  -c "bower install && xvfb-run wct --skip-selenium-install"
 ```
 
 * mount `iron-ajax` repo from your Mac into container
@@ -528,7 +575,11 @@ docker run -it \
 
 ---
 
-# Visual debugging on a Mac?
+### But...
+
+How do we know the browsers really ran?
+
+And what about visual debugging?
 
 I demo'd this for a VM, but what about a container?
 
@@ -536,9 +587,16 @@ I demo'd this for a VM, but what about a container?
 
 ### Also possible
 
+VNC could work but let's get weird.
+
 1. Xquartz - Apple's X Window system
-2. `socat` - expose the Mac's Xquartz socket to the container on a TCP port
+2. `socat` - networking utility; expose the Mac's Xquartz socket to the container on a TCP port
 3. declare the Xquartz `$DISPLAY` as the container's `$DISPLAY`
+
+---
+
+1. Run socat to expose Xquartz to the container
+2. use `-e DISPLAY=192.168.65.1:0` Docker option
 
 ---
 
@@ -548,8 +606,13 @@ I demo'd this for a VM, but what about a container?
 
 ### Additional resources
 
+#### NW.js
+
 * [nw-testing-box](https://github.com/mdb/nw-testing-box)
 * [nw-app-testing](https://github.com/mdb/nw-app-testing)
+
+#### Electron
+
 * [electron-app-testing](https://github.com/mdb/electron-app-testing)
 
 ---
@@ -557,9 +620,9 @@ I demo'd this for a VM, but what about a container?
 ### Next steps
 
 * spin up a cloud instance during your builds?
+* collect remote screen captures?
 * advanced web scraping?
 * headless functional testing?
-* collect remote screen captures?
 * further customize your CI
 * more Docker images?
 

@@ -392,6 +392,10 @@ pre .chunk {
   color: #aaa
 }
 
+pre {
+  font-size: 100%;
+}
+
 img.vagrant-capture {
   width: 800px;
 }
@@ -426,18 +430,29 @@ img.vagrant-capture {
   background-position: center;
 }
 
+#slide-70,
+#slide-74,
 #slide-52,
 #slide-58 {
   background-color: #fff;
   height: 100%;
 }
 
+#slide-70 video,
+#slide-74 video,
 #slide-52 video,
 #slide-58 video {
   width: 1292px;
   height: 780px;
 }
 
+#slide-74 video {
+  width: 1245px;
+  border: 1px solid #ddd;
+}
+
+#slide-70 section.slide-content,
+#slide-74 section.slide-content,
 #slide-52 section.slide-content,
 #slide-58 section.slide-content {
   margin-top: 0;
@@ -690,12 +705,14 @@ script:
 </section>
   </div>
   <div class="slide hidden -" id="slide-38">
-    <section class="slide-content"><h3 id="let-s-talk-about-the-x-window-system">Let&#39;s talk about the X Window System</h3>
+    <section class="slide-content"><h3 id="let-s-talk-about-">Let&#39;s talk about...</h3>
+<h4 id="the-x-window-system">the X Window System</h4>
 <p>How GUI displays are rendered on UNIX/UNIX-like systems</p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-39">
-    <section class="slide-content"><h3 id="background-x11-display-server">Background: X11 Display Server</h3>
+    <section class="slide-content"><h3 id="further-background-">Further background...</h3>
+<h4 id="x11-display-server">X11 Display Server</h4>
 <ul>
 <li>current release of the X Window System</li>
 <li>windowing system for bitmap displays used to build GUIs</li>
@@ -704,18 +721,19 @@ script:
 </section>
   </div>
   <div class="slide hidden -" id="slide-40">
-    <section class="slide-content"><h3 id="x-virtual-frame-buffer">X Virtual Frame Buffer</h3>
+    <section class="slide-content"><h3 id="which-brings-us-to-">Which brings us to...</h3>
+<h4 id="x-virtual-frame-buffer">X Virtual Frame Buffer</h4>
 <ul>
-<li>behaves like any other X server, yet no graphical output is shown</li>
-<li>performs graphical operations in memory without showing screen ouput</li>
+<li>like any other X server, yet no graphical output is shown</li>
+<li>performs graphical operations in memory; no screen ouput shown</li>
 <li>does not require the computer running it to have a display</li>
 </ul>
 </section>
   </div>
   <div class="slide hidden -" id="slide-41">
     <section class="slide-content"><h3 id="polymer-testing-box">polymer-testing-box</h3>
+<p>Set up your own Ubuntu VM for testing with Xvfb!</p>
 <p><a href="https://github.com/mdb/polymer-testing-box">github.com/mdb/polymer-testing-box</a></p>
-<p>Set up your own Ubuntu for testing with Xvfb!</p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-42">
@@ -748,8 +766,9 @@ script:
     <section class="slide-content"><h3 id="vagrant">Vagrant</h3>
 <p>(not JavaScript)</p>
 <ul>
-<li>build on VirtualBox</li>
+<li>built on VirtualBox</li>
 <li>tool to spin up lightweight, headless VMs</li>
+<li>the &quot;provider&quot;</li>
 </ul>
 </section>
   </div>
@@ -794,7 +813,6 @@ git clone https://github.com/PolymerElements/iron-ajax.git</code></pre>
   <div class="slide hidden -" id="slide-51">
     <section class="slide-content"><h3 id="install-bower-components">install bower components</h3>
 <pre><code>cd core-ajax
-git checkout 1.3.0
 bower install</code></pre>
 </section>
   </div>
@@ -846,51 +864,170 @@ config.vm.network &#39;forwarded_port&#39;, guest: 5900, host: 5901
 </section>
   </div>
   <div class="slide hidden -" id="slide-61">
-    <section class="slide-content"><h3 id="docker">Docker</h3>
-<ul>
-<li>containerized infrastructure increasingly common</li>
-<li>TravisCI utilizes Dockerized workers</li>
-<li>More simple than Ansible-provisioned VM</li>
-</ul>
+    <section class="slide-content"><h1 id="no-problem-">No problem!</h1>
 </section>
   </div>
   <div class="slide hidden -" id="slide-62">
-    <section class="slide-content"><h3 id="bonus">Bonus</h3>
-<p>[TODO: Dockerfile link]</p>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-63">
-    <section class="slide-content"><p>TODO:</p>
-<pre><code>docker pull clapclapexcitement/polymer-testing
-docker run...</code></pre>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-64">
-    <section class="slide-content"><p>TODO: demo video of Docker</p>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-65">
-    <section class="slide-content"><p>TODO: other apps?</p>
-<p>electron?</p>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-66">
-    <section class="slide-content"><h3 id="next-steps">Next steps</h3>
+    <section class="slide-content"><h3 id="docker">Docker</h3>
+<p>(not JavaScript)</p>
 <ul>
-<li>spin up a cloud instance during your builds?</li>
-<li>advanced web scraping?</li>
-<li>headless functional testing?</li>
-<li>collect remote screen captures?</li>
+<li>container engine</li>
+<li>&quot;sandbox&quot; with everything code needs to run</li>
+<li>code, runtime, system tools, system libraries</li>
+<li>layer of abstraction of Linux OS-level virtualization beyond VM</li>
 </ul>
 </section>
   </div>
+  <div class="slide hidden -" id="slide-63">
+    <section class="slide-content"><h3 id="in-the-wild">In the wild</h3>
+<ul>
+<li>increasingly common</li>
+<li>TravisCI utilizes Docker workers</li>
+<li>more lightweight than Ansible-provisioned VM</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-64">
+    <section class="slide-content"><h3 id="docker-wct">docker-wct</h3>
+<p>Execute <code>wct</code> in a Docker container running Xvfb!</p>
+<ul>
+<li><a href="https://github.com/mdb/docker-wct">github.com/mdb/docker-wct</a></li>
+<li><a href="https://hub.docker.com/r/clapclapexcitement/wct">hub.docker.com/r/clapclapexcitement/wct</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-65">
+    <section class="slide-content"><h3 id="dockerfile-vs-ansible">Dockerfile vs Ansible</h3>
+<p><a href="https://github.com/mdb/docker-wct/blob/master/Dockerfile"><code>Dockerfile</code></a> specs out how to build the Docker image.</p>
+<pre><code>FROM nodesource/trusty:latest
+
+RUN apt-get update;
+
+# install Chrome
+RUN apt-get install -y curl
+RUN curl -sL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo &#39;deb http://dl.google.com/linux/chrome/deb/ stable main&#39; &gt;&gt; /etc/apt/sources.list.d/google.list
+RUN apt-get update
+RUN apt-get install -y google-chrome-stable
+
+# install Firefox 46
+RUN apt-get install -y wget tar
+RUN wget -O /usr/local/firefox-46.0.1.tar.bz2 http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/46.0.1/linux-x86_64/en-US/firefox-46.0.1.tar.bz2
+RUN tar xvjf /usr/local/firefox-46.0.1.tar.bz2 -C /usr/local
+RUN ln -s /usr/local/firefox/firefox /usr/bin/firefox
+
+# install xvfb
+RUN apt-get install -y xvfb;
+
+# install java; needed by selenium
+RUN apt-get install -y default-jre
+
+# install web-component-tester &amp; bower globally
+RUN npm install -g web-component-tester
+RUN npm install -g bower
+
+# configure bower
+RUN echo &#39;{ &quot;allow_root&quot;: true }&#39; &gt; /root/.bowerrc</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-66">
+    <section class="slide-content"><h3 id="how-do-i-use-this-">How do I use this?</h3>
+<ol>
+<li>Install &amp; run Docker</li>
+<li>Download the image from DockerHub</li>
+<li>Run the image</li>
+</ol>
+</section>
+  </div>
   <div class="slide hidden -" id="slide-67">
-    <section class="slide-content"><p>TODO:
-more
-cloud deployment example with Terraform?</p>
+    <section class="slide-content"><h3 id="also-worth-noting-">Also worth noting...</h3>
+<p><a href="http://github.com/mdb/docker-wct">github.com/mdb/docker-wct</a> uses <a href="https://travis-ci.org/mdb/docker-wct/builds">TravisCI</a>.</p>
+<ul>
+<li>CI/tests serve as self-documenting quality checks</li>
+<li>Docker lends itself well to CI</li>
+<li>CI operates as living example of the tool&#39;s usage</li>
+</ul>
+<p>So...read the <code>.travis.yml</code> if you&#39;re confused.</p>
+<p>And take a gander at its <a href="https://travis-ci.org/mdb/docker-wct/builds">TravisCI builds</a>.</p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-68">
+    <section class="slide-content"><h3 id="download-the-image">Download the image</h3>
+<pre><code>docker pull clapclapexcitement/wct
+...</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-69">
+    <section class="slide-content"><h3 id="to-run">To run</h3>
+<pre><code>docker run -it \
+  -v $(pwd)/iron-ajax:/usr/src/app \
+  --security-opt seccomp:unconfined \
+  clapclapexcitement/wct bash \
+  -c &quot;bower install &amp;&amp; xvfb-run wct --skip-selenium-install&quot;</code></pre>
+<ul>
+<li>mount <code>iron-ajax</code> repo from your Mac into container</li>
+<li>pass a <code>security-opt</code> to deal with Chrome&#39;s use of <code>seccomp</code></li>
+<li>declare the image to run</li>
+<li>declare the command we want the container to run</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-70">
+    <section class="slide-content"><video controls="controls" src="videos/docker_run.mov"></video></section>
+  </div>
+  <div class="slide hidden -" id="slide-71">
+    <section class="slide-content"><h3 id="but-">But...</h3>
+<p>How do we know the browsers really ran?</p>
+<p>And what about visual debugging?</p>
+<p>I demo&#39;d this for a VM, but what about a container?</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-72">
+    <section class="slide-content"><h3 id="also-possible">Also possible</h3>
+<p>VNC could work but let&#39;s get weird.</p>
+<ol>
+<li>Xquartz - Apple&#39;s X Window system</li>
+<li><code>socat</code> - networking utility; expose the Mac&#39;s Xquartz socket to the container on a TCP port</li>
+<li>declare the Xquartz <code>$DISPLAY</code> as the container&#39;s <code>$DISPLAY</code></li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-73">
+    <section class="slide-content"><ol>
+<li>Run socat to expose Xquartz to the container</li>
+<li>use <code>-e DISPLAY=192.168.65.1:0</code> Docker option</li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-74">
+    <section class="slide-content"><video controls="controls" src="videos/docker_socat_run.mov"></video></section>
+  </div>
+  <div class="slide hidden -" id="slide-75">
+    <section class="slide-content"><h3 id="additional-resources">Additional resources</h3>
+<h4 id="nw-js">NW.js</h4>
+<ul>
+<li><a href="https://github.com/mdb/nw-testing-box">nw-testing-box</a></li>
+<li><a href="https://github.com/mdb/nw-app-testing">nw-app-testing</a></li>
+</ul>
+<h4 id="electron">Electron</h4>
+<ul>
+<li><a href="https://github.com/mdb/electron-app-testing">electron-app-testing</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-76">
+    <section class="slide-content"><h3 id="next-steps">Next steps</h3>
+<ul>
+<li>spin up a cloud instance during your builds?</li>
+<li>collect remote screen captures?</li>
+<li>advanced web scraping?</li>
+<li>headless functional testing?</li>
+<li>further customize your CI</li>
+<li>more Docker images?</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-77">
     <section class="slide-content"><h3 id="thanks-">Thanks!</h3>
 <ul>
 <li><a href="http://mikeball.info">mikeball.info</a></li>
@@ -899,10 +1036,10 @@ cloud deployment example with Terraform?</p>
 </ul>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-69">
+  <div class="slide hidden -" id="slide-78">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden" id="slide-70">
+  <div class="slide hidden" id="slide-79">
     <section class="slide-content"><div class="author">
   <h1 class="name">Mike Ball</h1>
     <h3 class="url">
