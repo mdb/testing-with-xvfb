@@ -1,3 +1,7 @@
+pre {
+  font-size: 100%;
+}
+
 img.vagrant-capture {
   width: 800px;
 }
