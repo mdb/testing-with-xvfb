@@ -578,7 +578,7 @@ docker run -it \
 ```
 
 * mount `iron-ajax` repo from your Mac into container
-* pass a `security-opt` to deal with Chrome's use of `seccomp`
+* pass a `security-opt` to deal with Chrome's use of [seccomp](https://chromium.googlesource.com/chromium/src/+/master/docs/linux_sandboxing.md) sandboxing
 * declare the image to run
 * declare the command we want the container to run
 
