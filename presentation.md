@@ -642,7 +642,7 @@ VNC could work but let's get weird.
 
 ---
 
-<iframe id="embedded-animation" src="http://foo/"></iframe>
+<iframe id="embedded-animation" src="http://mikeball.me/"></iframe>
 
 ---
 
