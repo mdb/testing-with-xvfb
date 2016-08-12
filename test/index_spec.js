@@ -16,7 +16,7 @@ describe('presentation', function() {
 
   it('should have the correct final slide', function(done) {
     element(by.id('embedded-animation')).getAttribute('src').then(function (src) {
-      expect(src).toEqual('http://mikeball.me/');
+      expect(src).toEqual('http://mikeball.info/');
 
       done();
     });
