@@ -1,0 +1,1205 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Headless Testing Against Real Web Browsers</title>
+  <style type="text/css">
+    body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  font-size: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background-color: #f7f7f7;
+}
+
+.slide-content {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  margin: 80px auto 0 auto;
+  padding: 30px;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 30px solid #333;
+  float: left;
+  margin-right: 30px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 50px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 50px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #888;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #888;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #44a4dd;
+}
+
+a:hover {
+  color: #66b5ff;
+}
+
+pre {
+  font-size: 60%;
+  line-height: 1.3;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #b4b4b4;
+
+  -webkit-transition: width 0.05s ease-out;
+  -moz-transition: width 0.05s ease-out;
+  -o-transition: width 0.05s ease-out;
+  transition: width 0.05s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+pre {
+  font-size: 100%;
+}
+
+img.vagrant-capture {
+  width: 800px;
+}
+
+#slide-3 {
+  background: url('images/john_riv.jpg') no-repeat;
+  background-position: center;
+}
+
+#slide-5 {
+  background: url('images/comcast_logo.png') no-repeat;
+}
+
+#slide-6 {
+  background: url('images/xtv.png') no-repeat;
+  background-size: 100%;
+}
+
+#slide-7 {
+  background: url('images/xfinity_origin.png') no-repeat;
+  background-position: center;
+}
+
+#slide-9 {
+  background: url('images/jsconf2015.png') no-repeat;
+  background-size: 75%;
+  background-position: center;
+}
+
+#slide-24 {
+  background: url('images/xtv_movies.png') no-repeat;
+  background-size: 100%;
+}
+
+#slide-34 {
+  background: url('images/thumbs_up.png') no-repeat;
+  background-position: center;
+}
+
+#slide-72,
+#slide-76,
+#slide-54,
+#slide-60 {
+  background-color: #fff;
+  height: 100%;
+}
+
+#slide-72 video,
+#slide-76 video,
+#slide-54 video,
+#slide-60 video {
+  width: 1292px;
+  height: 780px;
+}
+
+#slide-76 video {
+  width: 1245px;
+  border: 1px solid #ddd;
+}
+
+#slide-72 section.slide-content,
+#slide-76 section.slide-content,
+#slide-54 section.slide-content,
+#slide-60 section.slide-content {
+  margin-top: 0;
+  width: 1292px;
+  height: 100%;
+}
+
+#slide-79,
+#slide-79 section.slide-content,
+iframe {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide -" id="slide-1">
+    <section class="slide-content"><h1 id="headless-testing">Headless Testing</h1>
+<h2 id="against-real-web-browsers-with-xvfb">Against Real Web Browsers with Xvfb</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-2">
+    <section class="slide-content"><h3 id="before-we-get-started-a-challenge">Before we get started...a challenge</h3>
+<ul>
+<li>slides are at <a href="http://github.com/mdb/testing-with-xvfb">github.com/mdb/testing-with-xvfb</a></li>
+<li><a href="https://travis-ci.org/mdb/testing-with-xvfb">TravisCI</a> compiles the slides, executes crude tests using Xvfb, and auto-deploys <code>master</code> to <a href="http://mdb.github.io/testing-with-xvfb">mdb.github.io/testing-with-xvfb</a></li>
+</ul>
+<p>Submit a PR fixing the <a href="https://github.com/mdb/testing-with-xvfb/tree/fix-my-code">fix-my-code</a> branch based on its failing tests!</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-3">
+    <section class="slide-content"><!-- headshot --></section>
+  </div>
+  <div class="slide hidden -" id="slide-4">
+    <section class="slide-content"><h1 id="mike-ball">Mike Ball</h1>
+<h2 id="-mikeball-info-http-mikeball-info-"><a href="http://mikeball.info">mikeball.info</a></h2>
+<h2 id="-github-com-mdb-http-github-com-mdb-"><a href="http://github.com/mdb">github.com/mdb</a></h2>
+<h2 id="-twitter-com-clapexcitement-http-twitter-com-clapexcitement-"><a href="http://twitter.com/clapexcitement">twitter.com/clapexcitement</a></h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-5">
+    <section class="slide-content"><!-- comcast logo --></section>
+  </div>
+  <div class="slide hidden -" id="slide-6">
+    <section class="slide-content"><!-- xtv screenshot --></section>
+  </div>
+  <div class="slide hidden -" id="slide-7">
+    <section class="slide-content"><!-- xfinity-origin --></section>
+  </div>
+  <div class="slide hidden -" id="slide-8">
+    <section class="slide-content"><h1 id="prologue">Prologue</h1>
+<h2 id="why-are-we-talking-about-this-">Why are we talking about this?</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-9">
+    <section class="slide-content"><!-- jsconf 2015 --></section>
+  </div>
+  <div class="slide hidden -" id="slide-10">
+    <section class="slide-content"><h1 id="but-">But...</h1>
+<h2 id="where-are-we-now-">Where are we now?</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-11">
+    <section class="slide-content"><h1 id="my-beliefs">My Beliefs</h1>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-12">
+    <section class="slide-content"><h3 id="automated-tests">Automated Tests</h3>
+<ul>
+<li>ensure software works as it should</li>
+<li>help team move fast</li>
+<li>help us understand how change impacts the larger system</li>
+<li>help ensure customer quality</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-13">
+    <section class="slide-content"><h3 id="continuous-integration">Continuous Integration</h3>
+<ul>
+<li>ensures a codebase&#39;s health is continuously monitored with each change</li>
+<li>methodically consistent, easily repeatable</li>
+<li>as fast and cheap as possible, while still honoring its responsibilities</li>
+<li>feedback cycle!</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-14">
+    <section class="slide-content"><h3 id="my-career">My career</h3>
+<p>Growth means increased responsibility...</p>
+<ul>
+<li>more and more of the full stack</li>
+<li>build, deploy, release operations</li>
+<li>production support operations</li>
+<li>quality</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-15">
+    <section class="slide-content"><h1 id="i-3-automation">I &lt;3 automation</h1>
+<h2 id="it-s-a-cold-messy-imperfect-world-out-there">It&#39;s a cold, messy, imperfect world out there</h2>
+<h2 id="let-s-build-something-that-works">Let&#39;s build something that works</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-16">
+    <section class="slide-content"><h1 id="cheap-servers-">Cheap servers!</h1>
+<h2 id="virtualization-containers-cloud-infrastructure-etc-">Virtualization, containers, cloud infrastructure, etc.</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-17">
+    <section class="slide-content"><h3 id="headless-testing-helps">Headless testing helps</h3>
+<ul>
+<li>phantomjs</li>
+<li>EnvJS</li>
+<li>Rhino</li>
+<li>RubyRacer</li>
+<li>Node.js</li>
+<li>etc.</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-18">
+    <section class="slide-content"><h1 id="the-problem">The Problem</h1>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-19">
+    <section class="slide-content"><h2 id="what-if-your-technology-can-t-run-in-one-of-these-headless-runtimes-">What if your technology can&#39;t run in one of these headless runtimes?</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-20">
+    <section class="slide-content"><h1 id="huh-">Huh?</h1>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-21">
+    <section class="slide-content"><h3 id="for-example">For example</h3>
+<ul>
+<li>Flash</li>
+<li>NW.js</li>
+<li>Electron</li>
+<li>Google Polymer web-component-tester</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-22">
+    <section class="slide-content"><h2 id="let-s-focus-on-google-polymer">Let&#39;s focus on Google Polymer</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-23">
+    <section class="slide-content"><h3 id="google-polymer">Google Polymer</h3>
+<p>Google technology for authoring applications with web components</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-24">
+    <section class="slide-content"><!-- xtv movies --></section>
+  </div>
+  <div class="slide hidden -" id="slide-25">
+    <section class="slide-content"><h3 id="web-component-tester">web-component-tester</h3>
+<p><a href="http://github.com/Polymer/web-component-tester">github.com/Polymer/web-component-tester</a></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-26">
+    <section class="slide-content"><h3 id="but-">But...</h3>
+<p><code>web-component-tester</code> assumes a GUI.</p>
+<p>And a real web browser(s).</p>
+<p>And virtualized CI build agents don&#39;t have a display.</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-27">
+    <section class="slide-content"><h3 id="candidate-solutions">Candidate Solutions</h3>
+<ul>
+<li>TravisCI</li>
+<li>Sauce Labs</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-28">
+    <section class="slide-content"><h3 id="travisci">TravisCI</h3>
+<p><a href="https://docs.travis-ci.com/user/gui-and-headless-browsers">docs.travis-ci.com/user/gui-and-headless-browsers</a></p>
+<ul>
+<li>Xvfb</li>
+<li>Firefox</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-29">
+    <section class="slide-content"><h1 id="sidebar-">Sidebar...</h1>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-30">
+    <section class="slide-content"><h3 id="2015">2015</h3>
+<ul>
+<li>little-known TravisCI feature</li>
+<li>many Polymer projects overlooked CI altogether</li>
+</ul>
+<p>...hence my JSConf 2015 talk.</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-31">
+    <section class="slide-content"><h3 id="today">Today</h3>
+<p>Much more common!</p>
+<ul>
+<li><a href="https://travis-ci.org/Polymer/polymer">travis-ci.org/Polymer/polymer</a></li>
+<li><a href="https://travis-ci.org/PolymerElements/iron-ajax">travis-ci.org/PolymerElements/iron-ajax</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-32">
+    <section class="slide-content"><pre><code>language: node_js
+
+before_script:
+  - npm install -g bower web-component-tester
+  - bower install
+
+addons:
+ firefox: &#39;46.0&#39;
+ apt:
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
+
+script:
+  - xvfb-run wct</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-33">
+    <section class="slide-content"><h1 id="so-">So...</h1>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-34">
+    <section class="slide-content"><!-- thumbs up--></section>
+  </div>
+  <div class="slide hidden -" id="slide-35">
+    <section class="slide-content"><h3 id="sauce-labs-ci">Sauce Labs CI</h3>
+<p><a href="http://saucelabs.com">saucelabs.com</a></p>
+<ul>
+<li>Selenium cloud</li>
+<li>Access to over 100 device/OS/browser combos</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-36">
+    <section class="slide-content"><h1 id="but-">But...</h1>
+<h2 id="what-if-your-team-can-t-use-these-">What if your team can&#39;t use these?</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-37">
+    <section class="slide-content"><h3 id="whatchu-mean-">Whatchu mean?</h3>
+<ul>
+<li>SLA</li>
+<li>budget</li>
+<li>networking/firewall/security restrictions</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-38">
+    <section class="slide-content"><h3 id="enter-x-virtual-frame-buffer">Enter X Virtual Frame Buffer</h3>
+<p>AKA Xvfb</p>
+<p>run GUI applications (like web browsers) with no display!</p>
+<p>(how TravisCI runs web browsers)</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-39">
+    <section class="slide-content"><h2 id="how-s-this-work-">How&#39;s this work?</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-40">
+    <section class="slide-content"><h3 id="let-s-talk-about-">Let&#39;s talk about...</h3>
+<h4 id="the-x-window-system">the X Window System</h4>
+<p>How GUI displays are rendered on UNIX/UNIX-like systems</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-41">
+    <section class="slide-content"><h3 id="further-background-">Further background...</h3>
+<h4 id="x11-display-server">X11 Display Server</h4>
+<ul>
+<li>current release of the X Window System</li>
+<li>windowing system for bitmap displays used to build GUIs</li>
+<li>how visual elements are rendered on a screen and made available for user interaction via a GUI in Mac OS &amp; Linux, etc.</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-42">
+    <section class="slide-content"><h3 id="which-brings-us-to-">Which brings us to...</h3>
+<h4 id="x-virtual-frame-buffer">X Virtual Frame Buffer</h4>
+<ul>
+<li>like any other X server, yet no graphical output is shown</li>
+<li>performs graphical operations in memory; no screen ouput shown</li>
+<li>does not require the computer running it to have a display</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-43">
+    <section class="slide-content"><h3 id="polymer-testing-box">polymer-testing-box</h3>
+<p>Set up your own Ubuntu VM for testing with Xvfb!</p>
+<p><a href="https://github.com/mdb/polymer-testing-box">github.com/mdb/polymer-testing-box</a></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-44">
+    <section class="slide-content"><h3 id="core-technologies">Core technologies</h3>
+<ul>
+<li>Xvfb</li>
+<li>ansible</li>
+<li>Google Chrome</li>
+<li>Firefox (46)</li>
+<li>Node.js</li>
+<li>bower</li>
+<li>web-component-tester</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-45">
+    <section class="slide-content"><h3 id="demo-time-">Demo time!</h3>
+<ol>
+<li>provision a Vagrant Ubuntu box</li>
+<li><code>ansible</code> will install and configure all necessary dependencies</li>
+<li>we&#39;ll execute tests against a Polymer web component</li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-46">
+    <section class="slide-content"><h1 id="some-more-details-">Some more details...</h1>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-47">
+    <section class="slide-content"><h3 id="vagrant">Vagrant</h3>
+<p>(not JavaScript)</p>
+<ul>
+<li>built on VirtualBox</li>
+<li>tool to spin up lightweight, headless VMs</li>
+<li>the &quot;provider&quot;</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-48">
+    <section class="slide-content"><h3 id="vagrantfile">Vagrantfile</h3>
+<p>(not JavaScript)</p>
+<pre><code class="lang-ruby">...
+config.vm.network <span class="hljs-string">'forwarded_port'</span>, <span class="hljs-symbol">guest:</span> <span class="hljs-number">5900</span>, <span class="hljs-symbol">host:</span> <span class="hljs-number">5901</span>
+
+config.vm.provision <span class="hljs-symbol">:ansible</span> <span class="hljs-keyword">do</span> |ansible|
+  ansible.playbook = <span class="hljs-string">'playbook.yml'</span>
+<span class="hljs-keyword">end</span>
+...</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-49">
+    <section class="slide-content"><h3 id="ansible-playbook-yml-">ansible <code>playbook.yml</code></h3>
+<p>(not JavaScript)</p>
+<ol>
+<li>install and run Xvfb on display port 0</li>
+<li>install Node.js, bower, web-component-tester</li>
+<li>install Google Chrome &amp; Firefox</li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-50">
+    <section class="slide-content"><h3 id="provision-the-box">Provision the box</h3>
+<p><img class="vagrant-capture" src="images/vagrant_up.png" /></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-51">
+    <section class="slide-content"><h3 id="ssh-into-the-box">ssh into the box</h3>
+<p><img class="vagrant-capture" src="images/vagrant_ssh.png" /></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-52">
+    <section class="slide-content"><h3 id="clone-iron-ajax">clone iron-ajax</h3>
+<pre><code>cd /vagrant
+git clone https://github.com/PolymerElements/iron-ajax.git</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-53">
+    <section class="slide-content"><h3 id="install-bower-components">install bower components</h3>
+<pre><code>cd core-ajax
+bower install</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-54">
+    <section class="slide-content"><video controls="controls" src="videos/vagrant_run.mov"></video></section>
+  </div>
+  <div class="slide hidden -" id="slide-55">
+    <section class="slide-content"><h3 id="but-">But...</h3>
+<p>How do we know Chrome and Firefox really ran?</p>
+<p>And what about debugging?</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-56">
+    <section class="slide-content"><h1 id="vnc-">VNC!</h1>
+<h2 id="the-ubuntu-box-has-no-gui-but-your-mac-does-">The Ubuntu box has no GUI but your Mac does!</h2>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-57">
+    <section class="slide-content"><h3 id="on-the-ubuntu-box">On the Ubuntu box</h3>
+<pre><code>sudo apt-get install x11vnc
+x11vnc -display :0 &amp;</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-58">
+    <section class="slide-content"><h3 id="on-your-mac">On your Mac</h3>
+<pre><code>brew install Caskroom/cask/tigervnc-viewer</code></pre>
+<p>...start Tiger VNC Viewer on <code>localhost:5901</code></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-59">
+    <section class="slide-content"><h3 id="localhost-5901-">localhost:5901?</h3>
+<p>remmber this from the <code>Vagrantfile</code>?</p>
+<pre><code>...
+config.vm.network &#39;forwarded_port&#39;, guest: 5900, host: 5901
+...</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-60">
+    <section class="slide-content"><video controls="controls" src="videos/vagrant_vnc_run.mov"></video></section>
+  </div>
+  <div class="slide hidden -" id="slide-61">
+    <section class="slide-content"><h3 id="the-code">The code</h3>
+<p><a href="https://github.com/mdb/polymer-testing-box">github.com/mdb/polymer-testing-box</a></p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-62">
+    <section class="slide-content"><h3 id="what-about-docker-">What about Docker?</h3>
+<p>VMs are cool but what about containers?</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-63">
+    <section class="slide-content"><h1 id="no-problem-">No problem!</h1>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-64">
+    <section class="slide-content"><h3 id="docker">Docker</h3>
+<p>(not JavaScript)</p>
+<ul>
+<li>container engine</li>
+<li>&quot;sandbox&quot; with everything code needs to run</li>
+<li>code, runtime, system tools, system libraries</li>
+<li>layer of Linux OS-level abstraction beyond VM</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-65">
+    <section class="slide-content"><h3 id="in-the-wild">In the wild</h3>
+<ul>
+<li>increasingly common</li>
+<li>TravisCI utilizes Docker workers</li>
+<li>more lightweight than Ansible-provisioned VM</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-66">
+    <section class="slide-content"><h3 id="docker-wct">docker-wct</h3>
+<p>Execute <code>wct</code> in a Docker container running Xvfb!</p>
+<ul>
+<li><a href="https://github.com/mdb/docker-wct">github.com/mdb/docker-wct</a></li>
+<li><a href="https://hub.docker.com/r/clapclapexcitement/wct">hub.docker.com/r/clapclapexcitement/wct</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-67">
+    <section class="slide-content"><h3 id="dockerfile-vs-ansible">Dockerfile vs Ansible</h3>
+<p><a href="https://github.com/mdb/docker-wct/blob/master/Dockerfile"><code>Dockerfile</code></a> specs out how to build the Docker image.</p>
+<pre><code>FROM nodesource/trusty:latest
+
+RUN apt-get update;
+
+# install Chrome
+RUN apt-get install -y curl
+RUN curl -sL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo &#39;deb http://dl.google.com/linux/chrome/deb/ stable main&#39; &gt;&gt; /etc/apt/sources.list.d/google.list
+RUN apt-get update
+RUN apt-get install -y google-chrome-stable
+
+# install Firefox 46
+RUN apt-get install -y wget tar
+RUN wget -O /usr/local/firefox-46.0.1.tar.bz2 http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/46.0.1/linux-x86_64/en-US/firefox-46.0.1.tar.bz2
+RUN tar xvjf /usr/local/firefox-46.0.1.tar.bz2 -C /usr/local
+RUN ln -s /usr/local/firefox/firefox /usr/bin/firefox
+
+# install xvfb
+RUN apt-get install -y xvfb;
+
+# install java; needed by selenium
+RUN apt-get install -y default-jre
+
+# install web-component-tester &amp; bower globally
+RUN npm install -g web-component-tester
+RUN npm install -g bower
+
+# configure bower
+RUN echo &#39;{ &quot;allow_root&quot;: true }&#39; &gt; /root/.bowerrc</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-68">
+    <section class="slide-content"><h3 id="how-do-i-use-this-">How do I use this?</h3>
+<ol>
+<li>Install &amp; run Docker</li>
+<li>Download the image from DockerHub</li>
+<li>Run the image</li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-69">
+    <section class="slide-content"><h3 id="also-worth-noting-">Also worth noting...</h3>
+<p><a href="http://github.com/mdb/docker-wct">github.com/mdb/docker-wct</a> uses <a href="https://travis-ci.org/mdb/docker-wct/builds">TravisCI</a>.</p>
+<ul>
+<li>CI/tests serve as self-documenting quality checks</li>
+<li>Docker lends itself well to CI</li>
+<li>CI operates as living example of the tool&#39;s usage</li>
+</ul>
+<p>So...read the <code>.travis.yml</code> if you&#39;re confused.</p>
+<p>And take a gander at its <a href="https://travis-ci.org/mdb/docker-wct/builds">TravisCI builds</a>.</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-70">
+    <section class="slide-content"><h3 id="download-the-image">Download the image</h3>
+<pre><code>docker pull clapclapexcitement/wct
+...</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-71">
+    <section class="slide-content"><h3 id="to-run">To run</h3>
+<pre><code>docker run -it \
+  -v $(pwd)/iron-ajax:/usr/src/app \
+  --security-opt seccomp:unconfined \
+  clapclapexcitement/wct bash \
+  -c &quot;bower install &amp;&amp; xvfb-run wct --skip-selenium-install&quot;</code></pre>
+<ul>
+<li>mount <code>iron-ajax</code> repo from your Mac into container</li>
+<li>pass a <code>security-opt</code> to deal with Chrome&#39;s use of <a href="https://chromium.googlesource.com/chromium/src/+/master/docs/linux_sandboxing.md">seccomp</a> sandboxing</li>
+<li>declare the image to run</li>
+<li>declare the command we want the container to run</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-72">
+    <section class="slide-content"><video controls="controls" src="videos/docker_run.mov"></video></section>
+  </div>
+  <div class="slide hidden -" id="slide-73">
+    <section class="slide-content"><h3 id="but-">But...</h3>
+<p>How do we know the browsers really ran?</p>
+<p>And what about visual debugging?</p>
+<p>I demo&#39;d this for a VM, but what about a container?</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-74">
+    <section class="slide-content"><h3 id="also-possible">Also possible</h3>
+<p>VNC could work but let&#39;s get weird.</p>
+<ol>
+<li>Xquartz - Apple&#39;s X Window system</li>
+<li><code>socat</code> - networking utility; expose the Mac&#39;s Xquartz socket to the container on a TCP port</li>
+<li>declare the Xquartz <code>$DISPLAY</code> as the container&#39;s <code>$DISPLAY</code></li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-75">
+    <section class="slide-content"><ol>
+<li>Run socat to expose Xquartz to the container</li>
+<li>use <code>-e DISPLAY=192.168.65.1:0</code> Docker option</li>
+</ol>
+<p>(What&#39;s that weird IP? Docker on Mac requires VirtualBox; it&#39;s the VirtualBox host IP)</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-76">
+    <section class="slide-content"><video controls="controls" src="videos/docker_socat_run.mov"></video></section>
+  </div>
+  <div class="slide hidden -" id="slide-77">
+    <section class="slide-content"><h3 id="additional-resources">Additional resources</h3>
+<h4 id="nw-js">NW.js</h4>
+<ul>
+<li><a href="https://github.com/mdb/nw-testing-box">nw-testing-box</a></li>
+<li><a href="https://github.com/mdb/nw-app-testing">nw-app-testing</a></li>
+</ul>
+<h4 id="electron">Electron</h4>
+<ul>
+<li><a href="https://github.com/mdb/electron-app-testing">electron-app-testing</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-78">
+    <section class="slide-content"><h3 id="next-steps">Next steps</h3>
+<ul>
+<li>spin up a cloud instance during your builds?</li>
+<li>collect remote screen captures?</li>
+<li>advanced web scraping?</li>
+<li>headless functional testing?</li>
+<li>more Docker images?</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-79">
+    <section class="slide-content"><iframe id="embedded-animation" src="http://mikeball.me/"></iframe></section>
+  </div>
+  <div class="slide hidden -" id="slide-80">
+    <section class="slide-content"><h3 id="thanks-">Thanks!</h3>
+<ul>
+<li><a href="http://mikeball.info">mikeball.info</a></li>
+<li><a href="https://github.com/mdb">github.com/mdb</a></li>
+<li><a href="https://twitter.com/clapexcitement">twitter.com/clapexcitement</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-81">
+    <section class="slide-content"></section>
+  </div>
+  <div class="slide hidden author-slide" id="slide-82">
+    <section class="slide-content"><div class="author">
+  <h1 class="name">Mike Ball</h1>
+    <h3 class="url">
+      <a href="https://github.com/mdb">https://github.com/mdb</a>
+    </h3>
+</div>
+</section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  try {
+    window.history.replaceState({} , null, '#' + currentPosition());
+  } catch (e) {
+    window.location.hash = currentPosition();
+  }
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+      docElem.requestFullscreen ||
+      docElem.msRequestFullscreen ||
+      docElem.mozRequestFullScreen ||
+      docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+      doc.exitFullscreen ||
+      doc.msExitFullscreen ||
+      doc.mozCancelFullScreen ||
+      doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+
+  </script>
+</body>
+</html>
