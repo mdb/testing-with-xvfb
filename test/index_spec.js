@@ -13,4 +13,12 @@ describe('presentation', function() {
 
     expect(element(by.id('before-we-get-started-a-challenge')).isDisplayed()).toBeTruthy();
   });
+
+  it('should have the correct final slide', function(done) {
+    element(by.id('embedded-animation')).getAttribute('src').then(function (src) {
+      expect(src).toEqual('http://mikeball.me/');
+
+      done();
+    });
+  });
 });

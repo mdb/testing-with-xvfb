@@ -70,3 +70,13 @@ img.vagrant-capture {
   width: 1292px;
   height: 100%;
 }
+
+#slide-79,
+#slide-79 section.slide-content,
+iframe {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
